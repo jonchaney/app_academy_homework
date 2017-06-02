@@ -20,11 +20,11 @@ end
 
 stack = Stack.new
 
-# stack.add(1)
-# stack.add(2)
-# stack.add(3)
-stack.show
-# stack.remove
-# p stack.show
-# stack.remove
-# p stack.show
+stack.add(1)
+stack.add(2)
+stack.add(3)
+p stack.show
+stack.remove
+p stack.show
+stack.remove
+p stack.show
