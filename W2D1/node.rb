@@ -6,5 +6,5 @@ class Node
     @children = children
   end
 
-  
+
 end
