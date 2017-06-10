@@ -7,7 +7,7 @@ without blocks)! Be sure to look over the solutions when you're done.
 =end
 
 describe Dessert do
-  subject(:dessert) { Dessert.new("Pizza", 15, "Bill") }
+  subject(:dessert) { Dessert.new("Pizza", 15, Chef.new("chef")) }
   let(:chef) { double("chef") }
 
   describe "#initialize" do

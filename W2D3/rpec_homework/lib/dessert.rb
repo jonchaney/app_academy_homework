@@ -7,7 +7,7 @@ class Dessert
     raise ArgumentError unless quantity.is_a?(Integer)
     @type = type
     @quantity = quantity
-    @chef = Chef.new(chef)
+    @chef = chef
     @ingredients = []
     @temp = 60
   end
