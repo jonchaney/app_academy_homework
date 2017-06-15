@@ -122,15 +122,12 @@ def casablanca_cast
     name
   FROM
     actors
+  JOIN
+    castings
+  ON
+    actors.id = castings.actor_id
   WHERE
-    id IN (
-      SELECT
-        actor_id
-      FROM
-        castings
-      WHERE
-        movie_id = 27
-    )
+    movie_id = 27
   SQL
 end
 
@@ -141,21 +138,15 @@ def alien_cast
     name
   FROM
     actors
+  JOIN
+    castings
+  ON
+    actors.id = castings.actor_id
+  JOIN
+    movies
+  ON
+    movies.id = castings.movie_id
   WHERE
-    id IN (
-      SELECT
-        actor_id
-      FROM
-        castings
-      WHERE
-        movie_id = (
-          SELECT
-            id
-          FROM
-            movies
-          WHERE
-            title = 'Alien'
-        )
-    )
+    movies.title = 'Alien'
   SQL
 end
