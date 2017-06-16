@@ -73,7 +73,7 @@ def pulp_fiction_actors
   Actor.select('actors.id, actors.name')
        .joins(:castings, :movies)
        .where("movies.title = 'Pulp Fiction'")
-       .group('actors.id')
+       .distinct
 end
 
 def uma_movies
@@ -81,8 +81,9 @@ def uma_movies
   # display the id, title, and year of movies Uma Thurman has acted in
   # order them by ascending year
   # hint: use 'select', 'joins', 'where', and 'order'
-  Movie.select('DISTINCT movies.id, movies.title, movies.yr')
+  Movie.select('movies.id, movies.title, movies.yr')
        .joins(:castings, :actors)
        .where("actors.name = 'Uma Thurman'")
        .order('movies.yr')
+       .distinct
 end
