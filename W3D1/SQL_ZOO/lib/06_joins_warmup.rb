@@ -37,8 +37,7 @@ def films_from_sixty_two
   # List the films where the yr is 1962 [Show id, title]
   execute(<<-SQL)
   SELECT
-    id,
-    title
+    id, title
   FROM
     movies
   WHERE
@@ -55,6 +54,7 @@ def year_of_kane
     movies
   WHERE
     title = 'Citizen Kane'
+
   SQL
 end
 
@@ -64,15 +64,14 @@ def trek_films
   # year.
   execute(<<-SQL)
   SELECT
-    id,
-    title,
-    yr
+    id, title, yr
   FROM
     movies
   WHERE
     title LIKE 'Star Trek%'
   ORDER BY
-    yr ASC
+    yr
+
   SQL
 end
 
@@ -84,9 +83,10 @@ def films_by_id
   FROM
     movies
   WHERE
-   id = 1119 OR
-   id = 1595 OR
-   id = 1768
+    id = 1119 OR
+    id = 1595 OR
+    id = 1768
+
   SQL
 end
 
@@ -99,6 +99,7 @@ def glenn_close_id
     actors
   WHERE
     name = 'Glenn Close'
+
   SQL
 end
 
@@ -111,6 +112,7 @@ def casablanca_id
     movies
   WHERE
     title = 'Casablanca'
+
   SQL
 end
 
@@ -119,15 +121,22 @@ def casablanca_cast
   # in the previous question directly in your query (for example, id = 1).
   execute(<<-SQL)
   SELECT
-    name
+    actors.name
   FROM
     actors
   JOIN
-    castings
-  ON
-    actors.id = castings.actor_id
+    castings ON castings.actor_id = actors.id
+  JOIN
+    movies ON castings.movie_id = movies.id
   WHERE
-    movie_id = 27
+    movies.id = (
+      SELECT
+        id
+      FROM
+        movies
+      WHERE
+        title = 'Casablanca'
+    )
   SQL
 end
 
@@ -135,18 +144,15 @@ def alien_cast
   # Obtain the cast list for the film 'Alien'
   execute(<<-SQL)
   SELECT
-    name
+    actors.name
   FROM
     actors
   JOIN
-    castings
-  ON
-    actors.id = castings.actor_id
+    castings ON castings.actor_id = actors.id
   JOIN
-    movies
-  ON
-    movies.id = castings.movie_id
+    movies ON castings.movie_id = movies.id
   WHERE
     movies.title = 'Alien'
+
   SQL
 end
