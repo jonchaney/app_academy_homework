@@ -71,8 +71,7 @@ def heart_tracks
   # the number of such tracks, then by album title.
   execute(<<-SQL)
   SELECT
-    albums.title,
-    COUNT(tracks.*)
+    albums.title, COUNT(tracks.*)
   FROM
     albums
   JOIN
@@ -82,7 +81,8 @@ def heart_tracks
   GROUP BY
     albums.asin
   ORDER BY
-    COUNT(tracks.*) DESC, albums.title
+    COUNT(tracks.*) DESC,
+    albums.title
   SQL
 end
 
@@ -91,13 +91,13 @@ def title_tracks
   # the names of all the title tracks.
   execute(<<-SQL)
   SELECT
-    albums.title
+    tracks.song
   FROM
-    albums
+    tracks
   JOIN
-    tracks ON tracks.album = albums.asin
+    albums ON tracks.album = albums.asin
   WHERE
-    albums.title = tracks.song
+    tracks.song = albums.title
   SQL
 end
 
@@ -119,8 +119,7 @@ def song_title_counts
   # COUNT of times they show up.
   execute(<<-SQL)
   SELECT
-    tracks.song,
-    COUNT( DISTINCT albums.asin)
+    tracks.song, COUNT(DISTINCT albums.asin)
   FROM
     tracks
   JOIN
@@ -128,7 +127,7 @@ def song_title_counts
   GROUP BY
     tracks.song
   HAVING
-    COUNT( DISTINCT albums.asin) > 2
+    COUNT(DISTINCT albums.asin) > 2
   SQL
 end
 
@@ -137,8 +136,16 @@ def best_value
   # pence. Find the good value albums - show the title, the price and the number
   # of tracks.
   execute(<<-SQL)
-  
-
+  SELECT
+    albums.title, (COUNT(tracks.*) / albums.price) AS price_per_track
+  FROM
+    albums
+  JOIN
+    tracks ON albums.asin = tracks.album
+  GROUP BY
+    albums.asin
+  HAVING
+    (COUNT(tracks.*) / albums.price) < 50
   SQL
 end
 
